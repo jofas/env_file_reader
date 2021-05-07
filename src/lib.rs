@@ -3,11 +3,15 @@ use regex::Regex;
 use std::collections::HashMap;
 use std::fs;
 
-pub fn read_file(path: &str) -> Result<HashMap<String, String>, std::io::Error> {
+pub fn read_file(
+  path: &str,
+) -> Result<HashMap<String, String>, std::io::Error> {
   let content = fs::read_to_string(path)?;
 
-  let variable =
-    Regex::new(r#"^(export )?(?P<key>[0-9A-Z_]+)="?(?P<val>[^"]*)"?$"#).unwrap();
+  let variable = Regex::new(
+    r#"^(export )?(?P<key>[0-9A-Z_]+)="?(?P<val>[^"]*)"?$"#,
+  )
+  .unwrap();
 
   let mut config = HashMap::new();
 
