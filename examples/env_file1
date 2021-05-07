@@ -1,0 +1,18 @@
+# comments are possible
+A=B
+B=C
+# Will override the first definition of the A
+A=C
+# empty lines will be ignored
+
+badly formatted lines too
+
+# will be accessible in the array lowercased, as `some_longer_name`
+SOME_LONGER_NAME="hello I can do long texts too, with whitespaces!"
+
+# export statements before the variables will work as well
+export EXPORT=WORKS
+
+# the LINE_BREAK variable will have the value \, not TEST
+LINE_BREAK=\
+  TEST

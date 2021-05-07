@@ -1,7 +1,24 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+use regex::Regex;
+
+use std::collections::HashMap;
+use std::fs;
+
+pub fn read_file(path: &str) -> Result<HashMap<String, String>, std::io::Error> {
+  let content = fs::read_to_string(path)?;
+
+  let variable =
+    Regex::new(r#"^(export )?(?P<key>[0-9A-Z_]+)="?(?P<val>[^"]*)"?$"#).unwrap();
+
+  let mut config = HashMap::new();
+
+  for line in content.lines() {
+    if let Some(c) = variable.captures(line) {
+      config.insert(
+        c.name("key").unwrap().as_str().to_lowercase(),
+        c.name("val").unwrap().as_str().to_owned(),
+      );
     }
+  }
+
+  Ok(config)
 }
