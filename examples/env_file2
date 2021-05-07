@@ -1,0 +1,9 @@
+I_WILL_BE_APPENDED="I will be appended"
+
+# will be a string, not an integer
+NUM=0
+
+# read_files function: this will override value from env_file1,
+# if env_file1 is read before this file
+
+A=D

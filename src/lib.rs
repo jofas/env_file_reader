@@ -26,3 +26,16 @@ pub fn read_file(
 
   Ok(config)
 }
+
+pub fn read_files(
+  paths: &[&str],
+) -> Result<HashMap<String, String>, std::io::Error> {
+  let mut res = HashMap::new();
+  for path in paths {
+    let map = read_file(path)?;
+    map.into_iter().for_each(|(k, v)| {
+      res.insert(k, v);
+    });
+  }
+  Ok(res)
+}
