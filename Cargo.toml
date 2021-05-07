@@ -3,6 +3,11 @@ name = "env-file-reader"
 version = "0.1.0"
 authors = ["jofas <jonas@fc-web.de>"]
 edition = "2018"
+license = "MIT"
+readme = "README.rst"
+description = "functions for reading environment variables from a file"
+homepage = "https://github.com/jofas/env_file_reader"
+repository = "https://github.com/jofas/env_file_reader"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
