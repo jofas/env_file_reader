@@ -13,6 +13,6 @@ SOME_LONGER_NAME="hello I can do long texts too, with whitespaces!"
 # export statements before the variables will work as well
 export EXPORT=WORKS
 
-# the LINE_BREAK variable will have the value \, not TEST
+# the LINE_BREAK variable will have the value `\`, not `TEST`
 LINE_BREAK=\
   TEST
