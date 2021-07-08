@@ -1,7 +1,7 @@
 # comments are possible
 A=B
 B=C
-# Will override the first definition of the A
+# will override the first definition of the A
 A=C
 # empty lines will be ignored
 
@@ -16,3 +16,14 @@ export EXPORT=WORKS
 # the LINE_BREAK variable will have the value `\`, not `TEST`
 LINE_BREAK=\
   TEST
+
+# names are case-sensitive, so the three variables FOO, Foo and foo
+# will all generate different key-value pairs in the resulting hash
+# map
+export FOO=bar
+export Foo=baz
+export foo=qux
+
+# variables can contain "_", "-" and all alphanumeric characters
+this-variable-name=is-ok
+123_this-too=true

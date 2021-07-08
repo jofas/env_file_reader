@@ -9,7 +9,7 @@ pub fn read_file(
   let content = fs::read_to_string(path)?;
 
   let variable = Regex::new(
-    r#"^(export )?(?P<key>[0-9A-Z_]+)="?(?P<val>[^"]*)"?$"#,
+    r#"^(export )?(?P<key>[0-9A-Za-z_\-]+)="?(?P<val>[^"]*)"?$"#,
   )
   .unwrap();
 
@@ -18,7 +18,7 @@ pub fn read_file(
   for line in content.lines() {
     if let Some(c) = variable.captures(line) {
       config.insert(
-        c.name("key").unwrap().as_str().to_lowercase(),
+        c.name("key").unwrap().as_str().to_owned(),
         c.name("val").unwrap().as_str().to_owned(),
       );
     }
