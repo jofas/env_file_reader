@@ -2,9 +2,10 @@ use regex::Regex;
 
 use std::collections::HashMap;
 use std::fs;
+use std::path::Path;
 
-pub fn read_file(
-  path: &str,
+pub fn read_file<P: AsRef<Path>>(
+  path: P,
 ) -> Result<HashMap<String, String>, std::io::Error> {
   let content = fs::read_to_string(path)?;
 
@@ -27,8 +28,8 @@ pub fn read_file(
   Ok(config)
 }
 
-pub fn read_files(
-  paths: &[&str],
+pub fn read_files<P: AsRef<Path>>(
+  paths: &[P],
 ) -> Result<HashMap<String, String>, std::io::Error> {
   let mut res = HashMap::new();
   for path in paths {
