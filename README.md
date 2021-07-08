@@ -9,4 +9,6 @@ Simply reads an environment file to a hash map.
 
 [ ] badges
 
+[ ] support for linebreaks
+
 [ ] type support through `serde`
