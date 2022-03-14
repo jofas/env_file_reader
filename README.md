@@ -1,14 +1,18 @@
 # env-file-reader
 
+[![Build Status](https://github.com/jofas/env_file_reader/actions/workflows/build.yml/badge.svg)](https://github.com/jofas/env_file_reader/actions/workflows/build.yml)
+
 Simply reads an environment file to a hash map.
 
 
 ## TODO
 
-[ ] documentation
+* [ ] ci pipeline
 
-[ ] badges
+* [ ] badges: ci, codecov, crates.io, docs.rs, licence 
 
-[ ] support for linebreaks
+* [ ] documentation
 
-[ ] type support through `serde`
+* [ ] support for linebreaks
+
+* [ ] type support through `serde`
