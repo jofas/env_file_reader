@@ -5,6 +5,7 @@ I_WILL_BE_APPENDED="I will be appended"
 # will be a string, not an integer
 NUM=0
 
-# read_files function: this will override value from env_file1,
-# if env_file1 is read before this file
+# `read_files`: this will override value from `env_file1`,
+# if env_file1 is read before this file (when it is provided in the
+# array of env files before `env_file2`)
 A=D
