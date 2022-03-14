@@ -6,6 +6,7 @@
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://docs.rs/env-file-reader/latest/env_file_reader)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
+Library for reading env
 Simply reads an environment file to a hash map.
 
 
@@ -14,6 +15,12 @@ Simply reads an environment file to a hash map.
 * [ ] documentation
 
 * [x] support for linebreaks
+
+* [ ] support for single quotes
+
+* [ ] support for multiline values
+
+* [ ] support for escaped quotes
 
 * [ ] release `v0.3.0`
 
