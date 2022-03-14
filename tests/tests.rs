@@ -16,7 +16,7 @@ fn test_read_file() {
 
   assert_eq!(map.get("EXPORT"), Some(&"WORKS".to_owned()));
 
-  assert_eq!(map.get("LINE_BREAK"), Some(&"\\".to_owned()));
+  assert_eq!(map.get("LINE_BREAK"), Some(&"TEST FOO BAR".to_owned()));
 
   assert_eq!(map.get("FOO"), Some(&"bar".to_owned()));
   assert_eq!(map.get("Foo"), Some(&"baz".to_owned()));
@@ -26,7 +26,10 @@ fn test_read_file() {
     map.get("this-variable-name"),
     Some(&"is-ok".to_owned()),
   );
-  assert_eq!(map.get("123_this-too"), Some(&"true".to_owned()));
+  assert_eq!(
+    map.get("123_this-one_is-too"),
+    Some(&"true".to_owned())
+  );
 }
 
 #[test]

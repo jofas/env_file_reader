@@ -12,9 +12,12 @@ SOME_LONGER_NAME="hello I can do long texts too, with whitespaces!"
 # export statements before the variables will work as well
 export EXPORT=WORKS
 
-# the LINE_BREAK variable will have the value `\`, not `TEST`
+# line breaks are supported, the `LINE_BREAK` variable will have
+# the value `TEST FOO BAR`
 LINE_BREAK=\
-  TEST
+  TEST \
+  FOO \
+  BAR
 
 # names are case-sensitive, so the three variables FOO, Foo and foo
 # will all generate different key-value pairs in the resulting hash
@@ -25,4 +28,4 @@ export foo=qux
 
 # variables can contain "_", "-" and all alphanumeric characters
 this-variable-name=is-ok
-123_this-too=true
+123_this-one_is-too=true

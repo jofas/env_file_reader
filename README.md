@@ -13,6 +13,8 @@ Simply reads an environment file to a hash map.
 
 * [ ] documentation
 
-* [ ] support for linebreaks
+* [x] support for linebreaks
+
+* [ ] release `v0.3.0`
 
 * [ ] type support through `serde`
