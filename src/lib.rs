@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use regex::Regex;
 
 use lazy_static::lazy_static;
