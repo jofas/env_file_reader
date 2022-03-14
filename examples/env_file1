@@ -5,9 +5,8 @@ B=C
 A=C
 # empty lines will be ignored
 
-badly formatted lines too
+badly formatted lines, too
 
-# will be accessible in the array lowercased, as `some_longer_name`
 SOME_LONGER_NAME="hello I can do long texts too, with whitespaces!"
 
 # export statements before the variables will work as well
