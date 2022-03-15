@@ -66,13 +66,15 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
+### Reading multiple environment files
+
+### Reading environment variables from string
+
 ### Optional export keyword
 
 ### Quoted and multiline values
 
 ### Empty values
-
-### Reading multiple environment files
 
 ### Errors
 
