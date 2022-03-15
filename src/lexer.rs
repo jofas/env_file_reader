@@ -29,11 +29,11 @@ pub enum Token {
   Eq,
   #[token("export", priority = 4)]
   Export,
-  #[regex(r"[\w\-]+", |lex| lex.slice().parse(), priority = 3)]
+  #[regex(r"[^\s=]+", |lex| lex.slice().parse(), priority = 3)]
   Ident(String),
-  #[regex(r"'[\w [^']]*'", remove_quotes)]
-  #[regex(r"`[\w [^`]]*`", remove_quotes)]
-  #[regex(r#""[\w [^"]]*""#, remove_quotes)]
+  #[regex(r"'[^']*'", remove_quotes)]
+  #[regex(r"`[^`]*`", remove_quotes)]
+  #[regex(r#""[^"]*""#, remove_quotes)]
   QuotedString(String),
   #[error]
   #[regex(r"#.*\n?", logos::skip)]

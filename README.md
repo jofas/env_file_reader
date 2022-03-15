@@ -45,6 +45,27 @@ your rust application.
 
 ### Variable names and unicode support
 
+Variables and values support UTF-8. 
+It is perfectly okay to have an environment file that looks like this:
+
+```ini
+🦄=💖
+💖=🦄
+```
+
+```rust
+use env_file_reader::read_file;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_file("examples/.env.utf8")?;
+  
+  assert_eq!(&env_variables["🦄"], "💖");
+  assert_eq!(&env_variables["💖"], "🦄");
+
+  Ok(())
+}
+```
+
 ### Optional export keyword
 
 ### Quoted and multiline values
@@ -52,6 +73,8 @@ your rust application.
 ### Empty values
 
 ### Reading multiple environment files
+
+### Errors
 
 
 ## TODO
