@@ -68,6 +68,26 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
+Variables (and non-quoted values) support every character except
+whitespace characters and `=`, so go nuts:
+
+```rust
+use env_file_reader::read_str;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_str(
+    r"123-_variable\$*-@🦄=sprinkely-sprinkely-💖s-and_🐱s@the🏟️",
+  )?;
+  
+  assert_eq!(
+    &env_variables[r"123-_variable\$*-@🦄"],
+    "sprinkely-sprinkely-💖s-and_🐱s@the🏟️",
+  );
+
+  Ok(())
+}
+```
+
 
 ### Optional export keyword
 
@@ -148,7 +168,11 @@ fn main() -> std::io::Result<()> {
 
 ### Reading environment variables from string
 
+### Comments
+
 ### Quoted and multiline values
+
+### Whitespaces
 
 ### Empty values
 
