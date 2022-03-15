@@ -16,8 +16,6 @@ fn test_read_file() {
 
   assert_eq!(map.get("EXPORT"), Some(&"WORKS".to_owned()));
 
-  assert_eq!(map.get("LINE_BREAK"), Some(&"TEST FOO BAR".to_owned()));
-
   assert_eq!(map.get("FOO"), Some(&"bar".to_owned()));
   assert_eq!(map.get("Foo"), Some(&"baz".to_owned()));
   assert_eq!(map.get("foo"), Some(&"qux".to_owned()));

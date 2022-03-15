@@ -1,0 +1,33 @@
+use std::collections::HashMap;
+use std::iter::FromIterator;
+
+use crate::lexer::{LexicalError, Token};
+
+grammar;
+
+extern {
+  type Location = usize;
+  type Error = LexicalError;
+
+  enum Token {
+    "=" => Token::Eq,
+    "export" => Token::Export,
+    "ident" => Token::Ident(<String>),
+    "qs" => Token::QuotedString(<String>),
+  }
+}
+
+pub EnvFile: HashMap<String, String> = {
+  <Line*> => HashMap::from_iter(<>)
+}
+
+Line: (String, String) = {
+  <k:Key> "=" <v:Value> => (k, v),
+};
+
+Key: String = "export"? <k:"ident"> => k;
+
+Value: String = {
+  "ident" => <>,
+  "qs" => <>,
+};

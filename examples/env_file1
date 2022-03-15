@@ -5,19 +5,14 @@ B=C
 A=C
 # empty lines will be ignored
 
-badly formatted lines, too
-
+quoted_example="a text with a quote. The quote is removed from the value exposed by the env-file-reader"
 SOME_LONGER_NAME="hello I can do long texts too, with whitespaces!"
+
+string-with-newline="strings
+  with new lines work"
 
 # export statements before the variables will work as well
 export EXPORT=WORKS
-
-# line breaks are supported, the `LINE_BREAK` variable will have
-# the value `TEST FOO BAR`
-LINE_BREAK=\
-  TEST \
-  FOO \
-  BAR
 
 # names are case-sensitive, so the three variables FOO, Foo and foo
 # will all generate different key-value pairs in the resulting hash

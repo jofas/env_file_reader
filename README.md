@@ -14,13 +14,13 @@ Simply reads an environment file to a hash map.
 
 * [ ] documentation
 
-* [x] support for linebreaks
-
 * [ ] support for single quotes
 
 * [ ] support for multiline values
 
 * [ ] support for escaped quotes
+
+* [ ] test suite
 
 * [ ] release `v0.3.0`
 
