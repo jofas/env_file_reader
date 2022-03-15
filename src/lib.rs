@@ -11,10 +11,12 @@ lalrpop_mod!(env_file);
 
 mod lexer;
 
+pub use lexer::ParseError;
+
 pub fn read_str(s: &str) -> Result<HashMap<String, String>, Error> {
   env_file::EnvFileParser::new()
     .parse(lexer::Lexer::new(s))
-    .map_err(|e| Error::new(ErrorKind::InvalidInput, e))
+    .map_err(|_| Error::new(ErrorKind::InvalidInput, &ParseError))
 }
 
 pub fn read_file<P: AsRef<Path>>(

@@ -1,13 +1,17 @@
 use logos::{Logos, SpannedIter};
 
-#[derive(Debug)]
-pub struct LexicalError;
+use std::error::Error;
 
-impl std::fmt::Display for LexicalError {
+#[derive(Debug)]
+pub struct ParseError;
+
+impl std::fmt::Display for ParseError {
   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-    write!(f, "LexicalError")
+    write!(f, "ParseError")
   }
 }
+
+impl Error for ParseError {}
 
 fn remove_quotes(lex: &mut logos::Lexer<Token>) -> Option<String> {
   let slice = lex.slice();
@@ -37,13 +41,7 @@ pub enum Token {
   Error,
 }
 
-impl std::fmt::Display for Token {
-  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-    write!(f, "{:?}", self)
-  }
-}
-
-pub struct Lexer<'input> {
+pub(crate) struct Lexer<'input> {
   token_stream: SpannedIter<'input, Token>,
 }
 
@@ -56,14 +54,14 @@ impl<'input> Lexer<'input> {
 }
 
 impl<'input> Iterator for Lexer<'input> {
-  type Item = Result<(usize, Token, usize), LexicalError>;
+  type Item = Result<(usize, Token, usize), ParseError>;
 
   fn next(&mut self) -> Option<Self::Item> {
     match self.token_stream.next() {
       Some((token, span)) => {
         println!("token: {:?}", token);
         match token {
-          Token::Error => Some(Err(LexicalError)),
+          Token::Error => Some(Err(ParseError)),
           _ => Some(Ok((span.start, token, span.end))),
         }
       }
