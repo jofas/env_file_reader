@@ -69,6 +69,32 @@ fn main() -> std::io::Result<()> {
 ```
 
 
+### Optional export keyword
+
+`env-file-reader` supports `bash`-like environment files where the
+variables are exported to the environment via the `export` command:
+
+```bash
+export CLIENT_ID=YOUR_EXPORTED_CLIENT_ID
+export CLIENT_SECRET=YOUR_EXPORTED_CLIENT_SECRET
+```
+
+```rust
+use env_file_reader::read_file;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_file("examples/.env.exported")?;
+  
+  assert_eq!(&env_variables["CLIENT_ID"], "YOUR_EXPORTED_CLIENT_ID");
+  assert_eq!(
+    &env_variables["CLIENT_SECRET"], "YOUR_EXPORTED_CLIENT_SECRET",
+  );
+
+  Ok(())
+}
+```
+
+
 ### Reading multiple environment files
 
 Sometimes your environment is split into multiple files (e.g. one 
@@ -98,14 +124,29 @@ fn main() -> std::io::Result<()> {
 
 The environment files are read consecutively in the order they are 
 supplied to `read_files`.
-So if `examples/.env.utf8` were to define the variable `CLIENT_ID`,
-it would override the value of the `CLIENT_ID` variable defined in
-`examples/.env`.
+Therefore, variables are overridden by the ones that are defined 
+later:
+
+```rust
+use env_file_reader::read_files;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_files(&[
+    "examples/.env",
+    "examples/.env.exported",
+  ])?;
+  
+  assert_eq!(&env_variables["CLIENT_ID"], "YOUR_EXPORTED_CLIENT_ID");
+  assert_eq!(
+    &env_variables["CLIENT_SECRET"], "YOUR_EXPORTED_CLIENT_SECRET",
+  );
+
+  Ok(())
+}
+```
 
 
 ### Reading environment variables from string
-
-### Optional export keyword
 
 ### Quoted and multiline values
 
