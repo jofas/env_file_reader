@@ -9,6 +9,7 @@
 Library for reading environment variables from an environment file in
 rust.
 
+
 ## Usage
 
 Imagine this to be the content of your environment file located at
@@ -43,6 +44,7 @@ the contained variables, returning them as a
 `HashMap<String, String>`, from which they can be accessed easily by
 your rust application.
 
+
 ### Variable names and unicode support
 
 Variables and values support UTF-8. 
@@ -66,7 +68,40 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
+
 ### Reading multiple environment files
+
+Sometimes your environment is split into multiple files (e.g. one 
+environment file with your secrets you want to store in a 
+kubernetes secret and one environment file with non-secrets you want
+to store in a kubernetes config map).
+`env-file-reader` supports reading multiple environment files into one
+`HashMap` with all variables with the `read_files` function:
+
+```rust
+use env_file_reader::read_files;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_files(&[
+    "examples/.env",
+    "examples/.env.utf8",
+  ])?;
+  
+  assert_eq!(&env_variables["CLIENT_ID"], "YOUR_CLIENT_ID");
+  assert_eq!(&env_variables["CLIENT_SECRET"], "YOUR_CLIENT_SECRET");
+  assert_eq!(&env_variables["🦄"], "💖");
+  assert_eq!(&env_variables["💖"], "🦄");
+
+  Ok(())
+}
+```
+
+The environment files are read consecutively in the order they are 
+supplied to `read_files`.
+So if `examples/.env.utf8` were to define the variable `CLIENT_ID`,
+it would override the value of the `CLIENT_ID` variable defined in
+`examples/.env`.
+
 
 ### Reading environment variables from string
 
