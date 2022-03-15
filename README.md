@@ -6,13 +6,25 @@
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://docs.rs/env-file-reader/latest/env_file_reader)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Library for reading env
-Simply reads an environment file to a hash map.
+Library for reading environment variables from an environment file in
+rust.
+
+## Usage
+
+TODO: here a basic example
+
+### Variable names and unicode support
+
+### Optional export keyword
+
+### Quoted and multiline values
+
+### Empty values
 
 
 ## TODO
 
-* [ ] documentation
+* [ ] documentation: top-level and methods
 
 * [ ] support for single quotes
 
