@@ -11,7 +11,37 @@ rust.
 
 ## Usage
 
-TODO: here a basic example
+Imagine this to be the content of your environment file located at
+`examples/.env`:
+
+```ini
+CLIENT_ID=YOUR_CLIENT_ID
+CLIENT_SECRET=YOUR_CLIENT_SECRET
+```
+
+Now you want to read this file and expose the environment variables 
+to your rust application. 
+You can easily do this using the `env-file-reader` crate:
+
+```rust
+use env_file_reader::read_file;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_file("examples/.env")?;
+  
+  assert_eq!(&env_variables["CLIENT_ID"], "YOUR_CLIENT_ID");
+  assert_eq!(&env_variables["CLIENT_SECRET"], "YOUR_CLIENT_SECRET");
+
+  Ok(())
+}
+```
+
+The `env-file-reader` crate exposes the `read_file` function to which
+you can pass the path to your environment file.
+The `read_file` function then parses the environment file and extracts
+the contained variables, returning them as a 
+`HashMap<String, String>`, from which they can be accessed easily by
+your rust application.
 
 ### Variable names and unicode support
 
@@ -20,6 +50,8 @@ TODO: here a basic example
 ### Quoted and multiline values
 
 ### Empty values
+
+### Reading multiple environment files
 
 
 ## TODO
