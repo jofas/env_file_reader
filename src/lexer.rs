@@ -36,7 +36,7 @@ pub enum Token {
   Eq,
   #[token("export")]
   Export,
-  #[regex(r"\n\s+")]
+  #[regex(r"\n\s*")]
   NewLine,
   #[regex(r#"[^\s='`"\#]+"#, |lex| lex.slice().parse())]
   Ident(String),

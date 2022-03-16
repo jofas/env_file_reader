@@ -83,4 +83,10 @@ mod test {
     assert_eq!(&m["key2"], "something");
     assert_eq!(&m["key3"], "");
   }
+
+  #[test]
+  fn empty_string() {
+    let m = read_str("").unwrap();
+    assert_eq!(m.len(), 0);
+  }
 }

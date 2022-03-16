@@ -369,4 +369,25 @@ fn main() -> std::io::Result<()> {
 
 ### Empty values
 
+Your variables can be empty:
+
+```ini
+CLIENT_ID=
+CLIENT_SECRET=
+```
+
+```rust
+use env_file_reader::read_file;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_file("examples/.env.empty")?;
+  
+  assert_eq!(&env_variables["CLIENT_ID"], "");
+  assert_eq!(&env_variables["CLIENT_SECRET"], "");
+
+  Ok(())
+}
+```
+
+
 ### Errors
