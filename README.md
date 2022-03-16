@@ -69,7 +69,7 @@ fn main() -> std::io::Result<()> {
 ```
 
 Variables (and non-quoted values) support every character except
-whitespace characters, quotes (`\``, `'`, or `"`), `#` and `=`, so go
+whitespace characters, quotes (`````, `'`, or `"`), `#` and `=`, so go
 nuts:
 
 ```rust
