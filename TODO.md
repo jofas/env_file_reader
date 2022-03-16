@@ -16,4 +16,6 @@
 
 * [x] release `v0.3.0`
 
+* [ ] tags (`Cargo.toml`, github)
+
 * [ ] type support through `serde`
