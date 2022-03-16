@@ -229,8 +229,8 @@ fn main() -> std::io::Result<()> {
 
 If you need a value to be more powerful, e.g. contain whitespaces,
 quotes, equal sign, etc. (see 
-[here](### Variable names and unicode support)), you can wrap them in
-quotes.
+[the section about unicode support](#variable-names-and-unicode-support)), 
+you can wrap them in quotes.
 The supported quotes are double quotes (`"`), single quotes (`'`) and
 backticks (`` ` ``).
 A string wrapped in double quotes can contain single quotes and 
