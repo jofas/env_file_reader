@@ -1,9 +1,13 @@
 # comments are possible
-A=B
-B=C
+A=B # at the end of the line, too
+B=C# comment? yes
+  # also a comment
 # will override the first definition of the A
 A=C
 # empty lines will be ignored
+
+  # comment
+  X=Y
 
 quoted_example="a text with a quote. The quote is removed from the value exposed by the env-file-reader"
 SOME_LONGER_NAME="hello I can do long texts too, with whitespaces!"

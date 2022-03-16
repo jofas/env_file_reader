@@ -57,4 +57,16 @@ mod test {
     let s = "key with whitespace=x";
     assert!(read_str(s).is_err());
   }
+
+  #[test]
+  fn comments() {
+    let s = "
+      # a comment
+      key=val # a comment at the end of the line
+    ";
+
+    let m = read_str(s).unwrap();
+
+    assert_eq!(&m["key"], "val");
+  }
 }

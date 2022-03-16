@@ -191,7 +191,39 @@ fn main() -> std::io::Result<()> {
 ```
 
 
-### Comments
+### Comments and empty lines
+
+Environment files can contain single line comments beginning with a
+`#` and empty lines. 
+Imagine this to be your environment file located at 
+`examples/.env.comments`:
+
+```ini
+# A comment
+CLIENT_ID=YOUR_CLIENT_ID # A comment at the end of the line
+
+# Empty lines are fine, too
+
+# Another comment
+CLIENT_SECRET=YOUR_CLIENT_SECRET # Another comment behind a value
+```
+
+`env-file-reader` can parse this file, ignoring empty lines and 
+comments:
+
+```rust
+use env_file_reader::read_file;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_file("examples/.env.comments")?;
+  
+  assert_eq!(&env_variables["CLIENT_ID"], "YOUR_CLIENT_ID");
+  assert_eq!(&env_variables["CLIENT_SECRET"], "YOUR_CLIENT_SECRET");
+
+  Ok(())
+}
+```
+
 
 ### Quoted and multiline values
 

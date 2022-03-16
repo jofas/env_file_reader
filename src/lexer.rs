@@ -36,7 +36,7 @@ pub enum Token {
   #[regex(r#""[^"]*""#, remove_quotes)]
   QuotedString(String),
   #[error]
-  #[regex(r"#.*\n?", logos::skip)]
+  #[regex(r"#.*", logos::skip)]
   #[regex(r"\s+", logos::skip)]
   Error,
 }
@@ -59,6 +59,7 @@ impl<'input> Iterator for Lexer<'input> {
   fn next(&mut self) -> Option<Self::Item> {
     match self.token_stream.next() {
       Some((token, span)) => {
+        // TODO: remove
         println!("token: {:?}", token);
         match token {
           Token::Error => Some(Err(ParseError)),
