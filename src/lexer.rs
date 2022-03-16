@@ -99,8 +99,6 @@ impl<'input> Iterator for Lexer<'input> {
   fn next(&mut self) -> Option<Self::Item> {
     match self.token_stream.next() {
       Some((token, span)) => {
-        // TODO: remove
-        println!("token: {:?}", token);
         match token {
           Token::Error => Some(Err(ParseError)),
           _ => Some(Ok((span.start, token, span.end))),

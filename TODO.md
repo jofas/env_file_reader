@@ -2,7 +2,7 @@
 
 * [x] documentation: top-level 
 
-* [ ] documentation: exported artefacts
+* [x] documentation: exported artefacts
 
 * [x] support for single quotes
 
