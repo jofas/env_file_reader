@@ -323,6 +323,50 @@ please open an issue.
  
 ### Whitespaces
 
+Whitespaces around the equal sign are allowed. 
+As are whitespaces before the variable name and after the value.
+They are trimmed during parsing.
+
+```rust
+use env_file_reader::read_str;
+
+const ENV_FILE: &str = "
+      CLIENT_ID =     YOUR_CLIENT_ID
+  CLIENT_SECRET =YOUR_CLIENT_SECRET
+";
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_str(ENV_FILE)?;
+  
+  assert_eq!(&env_variables["CLIENT_ID"], "YOUR_CLIENT_ID");
+  assert_eq!(&env_variables["CLIENT_SECRET"], "YOUR_CLIENT_SECRET");
+
+  Ok(())
+}
+```
+
+If you need leading or trailing whitespaces in your value, consider 
+wrapping it in quotes:
+
+```rust
+use env_file_reader::read_str;
+
+const ENV_FILE: &str = "
+      CLIENT_ID = '    YOUR_CLIENT_ID    '
+  CLIENT_SECRET =YOUR_CLIENT_SECRET
+";
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_str(ENV_FILE)?;
+  
+  assert_eq!(&env_variables["CLIENT_ID"], "    YOUR_CLIENT_ID    ");
+  assert_eq!(&env_variables["CLIENT_SECRET"], "YOUR_CLIENT_SECRET");
+
+  Ok(())
+}
+```
+
+
 ### Empty values
 
 ### Errors
