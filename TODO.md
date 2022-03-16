@@ -14,6 +14,6 @@
 
 * [x] test suite
 
-* [ ] release `v0.3.0`
+* [x] release `v0.3.0`
 
 * [ ] type support through `serde`
