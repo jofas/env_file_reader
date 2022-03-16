@@ -25,11 +25,11 @@ fn remove_quotes(lex: &mut logos::Lexer<Token>) -> Option<String> {
 
 #[derive(Logos, Debug, PartialEq, Clone)]
 pub enum Token {
-  #[regex(r"=")]
+  #[token("=")]
   Eq,
-  #[token("export", priority = 4)]
+  #[token("export")]
   Export,
-  #[regex(r"[^\s=]+", |lex| lex.slice().parse(), priority = 3)]
+  #[regex(r#"[^\s='`"\#]+"#, |lex| lex.slice().parse())]
   Ident(String),
   #[regex(r"'[^']*'", remove_quotes)]
   #[regex(r"`[^`]*`", remove_quotes)]

@@ -38,3 +38,20 @@ pub fn read_files<P: AsRef<Path>>(
 
   Ok(res)
 }
+
+#[cfg(test)]
+mod test {
+  use super::read_str;
+
+  #[test]
+  fn wrong_idents() {
+    let s = "key_with#=x";
+    assert!(read_str(s).is_err());
+
+    let s = "key_with`quotes`=x";
+    assert!(read_str(s).is_err());
+
+    let s = "key_with=do-not-work=x";
+    assert!(read_str(s).is_err());
+  }
+}

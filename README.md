@@ -69,7 +69,8 @@ fn main() -> std::io::Result<()> {
 ```
 
 Variables (and non-quoted values) support every character except
-whitespace characters and `=`, so go nuts:
+whitespace characters, quotes (`\``, `'`, or `"`), `#` and `=`, so go
+nuts:
 
 ```rust
 use env_file_reader::read_str;
