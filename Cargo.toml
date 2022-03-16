@@ -6,6 +6,7 @@ edition = "2018"
 license = "MIT"
 readme = "README.md"
 description = "Library for reading environment variables from an environment file"
+keywords = ["environment"]
 homepage = "https://github.com/jofas/env_file_reader"
 repository = "https://github.com/jofas/env_file_reader"
 
