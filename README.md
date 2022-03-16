@@ -399,13 +399,11 @@ The error includes all normal `io` mishaps, like a missing file:
 ```rust
 use env_file_reader::read_file;
 
-fn main() {
-  let err = read_file(".env.which.does.not.exist")
-    .err()
-    .unwrap();
+let err = read_file(".env.which.does.not.exist")
+  .err()
+  .unwrap();
     
-  assert_eq!(err.kind(), std::io::ErrorKind::NotFound);
-}
+assert_eq!(err.kind(), std::io::ErrorKind::NotFound);
 ```
 
 Additionally, parsing can fail due to an ill-formatted environment
@@ -415,12 +413,10 @@ If that is the case, a custom error, `ParseError`, is returned:
 ```rust
 use env_file_reader::read_str;
 
-fn main() {
-  let err = read_str("badly formatted env file")
-    .err()
-    .unwrap();
+let err = read_str("badly formatted env file")
+  .err()
+  .unwrap();
 
-  assert_eq!(err.kind(), std::io::ErrorKind::InvalidInput);
-  assert_eq!(err.to_string(), "ParseError");
-}
+assert_eq!(err.kind(), std::io::ErrorKind::InvalidInput);
+assert_eq!(err.to_string(), "ParseError");
 ```

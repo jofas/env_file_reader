@@ -14,8 +14,6 @@
 
 * [x] test suite
 
-* [ ] clippy action
-
 * [ ] release `v0.3.0`
 
 * [ ] type support through `serde`

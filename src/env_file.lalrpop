@@ -15,18 +15,18 @@ extern {
     "ident" => Token::Ident(<String>),
     "qs" => Token::QuotedString(<String>),
     "\n" => Token::NewLine,
-    "EOF" => Token::EOF,
+    "eof" => Token::Eof,
   }
 }
 
 pub EnvFile: HashMap<String, String> = {
-  <Line*> => HashMap::from_iter(<>.into_iter().filter_map(|x| x)),
+  <Line*> => HashMap::from_iter(<>.into_iter().flatten()),
 }
 
 Line: Option<(String, String)> = {
   <k:Key> "=" <v:Value> => Some((k, v)),
   "\n" => None,
-  "EOF" => None,
+  "eof" => None,
 };
 
 Key: String = "export"? <k:"ident"> => k;
@@ -35,5 +35,5 @@ Value: String = {
   "ident" => <>,
   "qs" => <>,
   "\n" => String::new(),
-  "EOF" => String::new(),
+  "eof" => String::new(),
 };

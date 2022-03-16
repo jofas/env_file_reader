@@ -12,14 +12,12 @@ use std::error::Error;
 /// ```rust
 /// use env_file_reader::read_str;
 ///
-/// fn main() {
-///   let err = read_str("badly formatted env file")
-///     .err()
-///     .unwrap();
+/// let err = read_str("badly formatted env file")
+///   .err()
+///   .unwrap();
 ///
-///   assert_eq!(err.kind(), std::io::ErrorKind::InvalidInput);
-///   assert_eq!(err.to_string(), "ParseError");
-/// }
+/// assert_eq!(err.kind(), std::io::ErrorKind::InvalidInput);
+/// assert_eq!(err.to_string(), "ParseError");
 /// ```
 ///
 #[derive(Debug)]
@@ -46,7 +44,7 @@ fn remove_quotes(lex: &mut logos::Lexer<Token>) -> String {
   let escaped_newline_pattern = "\\n";
 
   slice[1..slice.len() - 1]
-    .replace(&escaped_quote_pattern, &quote)
+    .replace(&escaped_quote_pattern, quote)
     .replace(escaped_newline_pattern, "\n")
 }
 
@@ -64,7 +62,7 @@ pub enum Token {
   #[regex(r"`[^`]*`", remove_quotes)]
   #[regex(r#""([^"]|\\")*""#, remove_quotes)]
   QuotedString(String),
-  EOF,
+  Eof,
   #[error]
   #[regex(r"#.*", logos::skip)]
   #[regex(r"\s+", logos::skip)]
@@ -98,18 +96,16 @@ impl<'input> Iterator for Lexer<'input> {
 
   fn next(&mut self) -> Option<Self::Item> {
     match self.token_stream.next() {
-      Some((token, span)) => {
-        match token {
-          Token::Error => Some(Err(ParseError)),
-          _ => Some(Ok((span.start, token, span.end))),
-        }
-      }
+      Some((token, span)) => match token {
+        Token::Error => Some(Err(ParseError)),
+        _ => Some(Ok((span.start, token, span.end))),
+      },
       None => {
         if self.finished() {
           None
         } else {
           self.finish();
-          Some(Ok((0, Token::EOF, 0)))
+          Some(Ok((0, Token::Eof, 0)))
         }
       }
     }
