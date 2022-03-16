@@ -175,7 +175,7 @@ option to read environment variables directly from a string:
 ```rust
 use env_file_reader::read_str;
 
-const ENV_FILE: &str = r"
+const ENV_FILE: &str = "
   CLIENT_ID=YOUR_CLIENT_ID
   CLIENT_SECRET=YOUR_CLIENT_SECRET
 ";
