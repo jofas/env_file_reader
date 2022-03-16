@@ -13,12 +13,67 @@ mod lexer;
 
 pub use lexer::ParseError;
 
+/// Parses an environment file that is passed as a `&str`.
+///
+/// Returns an error if if the string is ill-formatted.
+/// Read the [crate's](crate) documentation for information about the
+/// format that `env-file-reader` supports.
+///
+/// **Example:**
+///
+/// ```rust
+/// use env_file_reader::read_str;
+///
+/// const ENV_FILE: &str = "
+///   CLIENT_ID=YOUR_CLIENT_ID
+///   CLIENT_SECRET=YOUR_CLIENT_SECRET
+/// ";
+///
+/// fn main() -> std::io::Result<()> {
+///   let env_variables = read_str(ENV_FILE)?;
+///
+///   assert_eq!(&env_variables["CLIENT_ID"], "YOUR_CLIENT_ID");
+///   assert_eq!(&env_variables["CLIENT_SECRET"], "YOUR_CLIENT_SECRET");
+///
+///   Ok(())
+/// }
+/// ```
+///
 pub fn read_str(s: &str) -> Result<HashMap<String, String>, Error> {
   env_file::EnvFileParser::new()
     .parse(lexer::Lexer::new(s))
     .map_err(|_| Error::new(ErrorKind::InvalidInput, &ParseError))
 }
 
+/// Parses the environment file at the specified `path`.
+///
+/// Returns an error if reading the file was unsuccessful or if the
+/// file is ill-formatted.
+/// Read the [crate's](crate) documentation for information about the
+/// format that `env-file-reader` supports.
+///
+/// **Example:**
+///
+/// `examples/.env`:
+///
+/// ```ini
+/// CLIENT_ID=YOUR_CLIENT_ID
+/// CLIENT_SECRET=YOUR_CLIENT_SECRET
+/// ```
+///
+/// ```rust
+/// use env_file_reader::read_file;
+///
+/// fn main() -> std::io::Result<()> {
+///   let env_variables = read_file("examples/.env")?;
+///
+///   assert_eq!(&env_variables["CLIENT_ID"], "YOUR_CLIENT_ID");
+///   assert_eq!(&env_variables["CLIENT_SECRET"], "YOUR_CLIENT_SECRET");
+///
+///   Ok(())
+/// }
+/// ```
+///
 pub fn read_file<P: AsRef<Path>>(
   path: P,
 ) -> Result<HashMap<String, String>, Error> {
@@ -27,6 +82,58 @@ pub fn read_file<P: AsRef<Path>>(
   read_str(&content)
 }
 
+/// Parses multiple environment files at the specified `paths`
+/// and constructs a single [HashMap] with the merged environment
+/// variables from the files.
+///
+/// This is a vectorized version of [read_file], where a single
+/// output is constructed from calling [read_file] for each file
+/// provided as an argument to this function.
+/// The order in which the `paths` are defined is maintained, so
+/// if an environment file with a higher index exposes the same
+/// environment variable as a file with a lower index, the value of
+/// the file with the higher index is exposed by the returned
+/// [HashMap].
+///
+/// Returns an error if reading one file was unsuccessful or if one
+/// file is ill-formatted.
+/// Read the [crate's](crate) documentation for information about the
+/// format that `env-file-reader` supports.
+///
+/// **Example:**
+///
+/// `examples/.env`:
+///
+/// ```ini
+/// CLIENT_ID=YOUR_CLIENT_ID
+/// CLIENT_SECRET=YOUR_CLIENT_SECRET
+/// ```
+///
+/// `examples/.env.utf8`:
+///
+/// ```ini
+/// 🦄=💖
+/// 💖=🦄
+/// ```
+///
+/// ```rust
+/// use env_file_reader::read_files;
+///
+/// fn main() -> std::io::Result<()> {
+///   let env_variables = read_files(&[
+///     "examples/.env",
+///     "examples/.env.utf8",
+///   ])?;
+///
+///   assert_eq!(&env_variables["CLIENT_ID"], "YOUR_CLIENT_ID");
+///   assert_eq!(&env_variables["CLIENT_SECRET"], "YOUR_CLIENT_SECRET");
+///   assert_eq!(&env_variables["🦄"], "💖");
+///   assert_eq!(&env_variables["💖"], "🦄");
+///
+///   Ok(())
+/// }
+/// ```
+///
 pub fn read_files<P: AsRef<Path>>(
   paths: &[P],
 ) -> Result<HashMap<String, String>, Error> {

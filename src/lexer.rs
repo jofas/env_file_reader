@@ -2,6 +2,26 @@ use logos::{Logos, SpannedIter};
 
 use std::error::Error;
 
+/// The error returned in case an environment fill is ill-formatted.
+///
+/// Read the [crate's](crate) documentation for information about the
+/// format that `env-file-reader` supports.
+///
+/// **Example:**
+///
+/// ```rust
+/// use env_file_reader::read_str;
+///
+/// fn main() {
+///   let err = read_str("badly formatted env file")
+///     .err()
+///     .unwrap();
+///
+///   assert_eq!(err.kind(), std::io::ErrorKind::InvalidInput);
+///   assert_eq!(err.to_string(), "ParseError");
+/// }
+/// ```
+///
 #[derive(Debug)]
 pub struct ParseError;
 
