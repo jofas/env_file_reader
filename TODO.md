@@ -1,6 +1,8 @@
 # TODO
 
-* [ ] documentation: top-level and methods
+* [x] documentation: top-level 
+
+* [ ] documentation: exported artefacts
 
 * [x] support for single quotes
 
@@ -10,7 +12,7 @@
 
 * [x] support for empty values
 
-* [ ] test suite
+* [x] test suite
 
 * [ ] clippy action
 
