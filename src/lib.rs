@@ -53,5 +53,8 @@ mod test {
 
     let s = "key_with=do-not-work=x";
     assert!(read_str(s).is_err());
+
+    let s = "key with whitespace=x";
+    assert!(read_str(s).is_err());
   }
 }
