@@ -169,6 +169,28 @@ fn main() -> std::io::Result<()> {
 
 ### Reading environment variables from string
 
+Besides `read_file` and `read_files` `env-file-reader` offers the 
+option to read environment variables directly from a string:
+
+```rust
+use env_file_reader::read_str;
+
+const ENV_FILE: &str = r"
+  CLIENT_ID=YOUR_CLIENT_ID
+  CLIENT_SECRET=YOUR_CLIENT_SECRET
+";
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_str(ENV_FILE)?;
+  
+  assert_eq!(&env_variables["CLIENT_ID"], "YOUR_CLIENT_ID");
+  assert_eq!(&env_variables["CLIENT_SECRET"], "YOUR_CLIENT_SECRET");
+
+  Ok(())
+}
+```
+
+
 ### Comments
 
 ### Quoted and multiline values
