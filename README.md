@@ -227,25 +227,102 @@ fn main() -> std::io::Result<()> {
 
 ### Quoted and multiline values
 
+If you need a value to be more powerful, e.g. contain whitespaces,
+quotes, equal sign, etc. (see 
+[here](### Variable names and unicode support)), you can wrap them in
+quotes.
+The supported quotes are double quotes (`"`), single quotes (`'`) and
+backticks (`` ` ``).
+A string wrapped in double quotes can contain single quotes and 
+backticks and so on.
+They also support escaped quotes, so 
+`"a string with \"double quotes\""` will work.
+
+```ini
+1="I support whitespaces and = and # and even this: \""
+2='single quotes work, too and they can contain "double quotes"'
+3=`backticks are "also" valid 'quotes'`
+```
+
+```rust
+use env_file_reader::read_file;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_file("examples/.env.quotes")?;
+  
+  assert_eq!(
+    &env_variables["1"], 
+    "I support whitespaces and = and # and even this: \"",
+  );
+  assert_eq!(
+    &env_variables["2"], 
+    "single quotes work, too and they can contain \"double quotes\"",
+  );
+  assert_eq!(
+    &env_variables["3"], 
+    "backticks are \"also\" valid 'quotes'",
+  );
+
+  Ok(())
+}
+```
+
+Multiline strings are supported as well and look like this, either 
+with a literal line break or with an explicitly typed `\n`:
+
+```ini
+PRIVATE_KEY1="-----BEGIN PRIVATE KEY-----
+...
+-----END PRIVATE KEY-----"
+
+# PRIVATE_KEY2 is identical to PRIVATE_KEY1
+PRIVATE_KEY2="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
+```
+
+```rust
+use env_file_reader::read_file;
+
+fn main() -> std::io::Result<()> {
+  let env_variables = read_file("examples/.env.multiline")?;
+  
+  assert_eq!(
+    &env_variables["PRIVATE_KEY1"], 
+    "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----",
+  );
+  assert_eq!(
+    &env_variables["PRIVATE_KEY2"], 
+    "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----",
+  );
+
+  Ok(())
+}
+```
+
+**Note on escaped characters:** A quoted string only supports 
+explicitly typed newlines and the escaped quote itself.
+Other explicitly typed special characters like `\t` or `\r` are not
+supported.
+So a value equal to `"hello\n\t\"world\""` will have the following
+value when being processed by `env-file-reader`
+
+```txt
+hello
+\t"world"
+```
+
+not
+
+```txt
+hello
+    "world"
+```
+
+If you need support for other explicitly typed special characters,
+please open an issue.
+
+ 
 ### Whitespaces
 
 ### Empty values
 
 ### Errors
-
-
-## TODO
-
-* [ ] documentation: top-level and methods
-
-* [ ] support for single quotes
-
-* [ ] support for multiline values
-
-* [ ] support for escaped quotes
-
-* [ ] test suite
-
-* [ ] release `v0.3.0`
-
-* [ ] type support through `serde`
