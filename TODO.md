@@ -4,9 +4,11 @@
 
 * [x] support for single quotes
 
-* [ ] support for multiline values
+* [x] support for multiline values
 
-* [ ] support for escaped quotes
+* [x] support for escaped quotes
+
+* [x] support for empty values
 
 * [ ] test suite
 

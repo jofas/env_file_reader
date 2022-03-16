@@ -14,15 +14,19 @@ extern {
     "export" => Token::Export,
     "ident" => Token::Ident(<String>),
     "qs" => Token::QuotedString(<String>),
+    "\n" => Token::NewLine,
+    "EOF" => Token::EOF,
   }
 }
 
 pub EnvFile: HashMap<String, String> = {
-  <Line*> => HashMap::from_iter(<>)
+  <Line*> => HashMap::from_iter(<>.into_iter().filter_map(|x| x)),
 }
 
-Line: (String, String) = {
-  <k:Key> "=" <v:Value> => (k, v),
+Line: Option<(String, String)> = {
+  <k:Key> "=" <v:Value> => Some((k, v)),
+  "\n" => None,
+  "EOF" => None,
 };
 
 Key: String = "export"? <k:"ident"> => k;
@@ -30,4 +34,6 @@ Key: String = "export"? <k:"ident"> => k;
 Value: String = {
   "ident" => <>,
   "qs" => <>,
+  "\n" => String::new(),
+  "EOF" => String::new(),
 };

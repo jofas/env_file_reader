@@ -15,5 +15,6 @@ repository = "https://github.com/jofas/env_file_reader"
 lalrpop = "^0.19.7"
 
 [dependencies]
+regex = "1"
 logos = "^0.12.0"
 lalrpop-util = "^0.19.7"

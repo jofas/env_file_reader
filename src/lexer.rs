@@ -36,12 +36,15 @@ pub enum Token {
   Eq,
   #[token("export")]
   Export,
+  #[regex(r"\n\s+")]
+  NewLine,
   #[regex(r#"[^\s='`"\#]+"#, |lex| lex.slice().parse())]
   Ident(String),
   #[regex(r"'[^']*'", remove_quotes)]
   #[regex(r"`[^`]*`", remove_quotes)]
   #[regex(r#""([^"]|\\")*""#, remove_quotes)]
   QuotedString(String),
+  EOF,
   #[error]
   #[regex(r"#.*", logos::skip)]
   #[regex(r"\s+", logos::skip)]
@@ -50,13 +53,23 @@ pub enum Token {
 
 pub(crate) struct Lexer<'input> {
   token_stream: SpannedIter<'input, Token>,
+  finished: bool,
 }
 
 impl<'input> Lexer<'input> {
   pub fn new(input: &'input str) -> Self {
     Self {
       token_stream: Token::lexer(input).spanned(),
+      finished: false,
     }
+  }
+
+  fn finish(&mut self) {
+    self.finished = true;
+  }
+
+  fn finished(&self) -> bool {
+    self.finished
   }
 }
 
@@ -73,7 +86,14 @@ impl<'input> Iterator for Lexer<'input> {
           _ => Some(Ok((span.start, token, span.end))),
         }
       }
-      None => None,
+      None => {
+        if self.finished() {
+          None
+        } else {
+          self.finish();
+          Some(Ok((0, Token::EOF, 0)))
+        }
+      }
     }
   }
 }
