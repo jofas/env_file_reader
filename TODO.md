@@ -18,4 +18,7 @@
 
 * [x] tags (`Cargo.toml`, github)
 
+* [ ] `expose|expose_file|expose_files` function exposing the `.env` 
+  variables to the system
+
 * [ ] type support through `serde`
